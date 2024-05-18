@@ -9,7 +9,7 @@ model=load_model()
 st.write("""
 # Earthquake Magnitude Classifier """
 )
-file=st.file_uploader("Choose plant photo from computer",type=["jpg","png"])
+file=st.text_input("Enter Magnitude Level",type="default")
 
 import cv2
 from PIL import Image,ImageOps
