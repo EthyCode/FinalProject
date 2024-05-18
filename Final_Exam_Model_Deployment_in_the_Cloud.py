@@ -3,7 +3,7 @@ import tensorflow as tf
 
 @st.cache_resource
 def load_model():
-  model=tf.keras.models.load_model('earthquake_magnitude_classifier.h5')
+  model=tf.keras.models.load_model('Cifar10_Models.h5')
   return model
 model=load_model()
 st.write("""# CIFAR10 Detection System""")
