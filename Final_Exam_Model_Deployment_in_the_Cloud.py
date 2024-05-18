@@ -26,5 +26,5 @@ else:
     st.image(image,use_column_width=True)
     prediction=import_and_predict(image,model)
     class_names=['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-    string="OUTPUT : "+class_names[np.argmax(prediction)]
+    string="This Image is Classified as a : "+class_names[np.argmax(prediction)]
     st.success(string)
