@@ -6,9 +6,7 @@ def load_model():
   model=tf.keras.models.load_model('plant_classifier.hdf5')
   return model
 model=load_model()
-st.write("""
-# CIFAR10 Detection System"""
-)
+st.write("""# CIFAR10 Detection System""")
 file=st.file_uploader("Insert Image",type=["jpg","png"])
 
 import cv2
