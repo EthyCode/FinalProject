@@ -1,6 +1,6 @@
 import streamlit as st
 import tensorflow as tf
-
+import numpy as np
 @st.cache_resource
 def load_model():
   model=tf.keras.models.load_model('earthquake_magnitude_classifier.h5')
@@ -11,38 +11,20 @@ st.write("""
 )
 file=st.slider("Magnitude Level", min_value=2.5, max_value=10.0, step=0.1)
 
-import cv2
-from PIL import Image,ImageOps
-import numpy as np
-def import_and_predict(image_data,model):
-    size=(64,64)
-    image=ImageOps.fit(image_data,size)
-    img=np.asarray(image)
-    img_reshape=img[np.newaxis,...]
-    prediction=model.predict(img_reshape)
+def predict_magnitude(magnitude_level, model):
+    # Preprocess the magnitude level (if necessary, based on your model's requirements)
+    # Here we assume the model expects a 1D array with a single value
+    input_data = np.array([[magnitude_level]])
+    
+    # Predict the magnitude using the model
+    prediction = model.predict(input_data)
+    
     return prediction
-if file is None:
-    st.text("Please upload an image file")
-else:
-    image=Image.open(file)
-    st.image(image,use_column_width=True)
-    prediction=import_and_predict(file,model)
-    class_names=['Alpinia Galanga (Rasna)','Amaranthus Viridis (Arive-Dantu)',
-                 'Artocarpus Heterophyllus (Jackfruit)',
-                 'Azadirachta Indica (Neem)','Basella Alba (Basale)',
-                 'Brassica Juncea (Indian Mustard)','Carissa Carandas (Karanda)',
-                 'Citrus Limon (Lemon)','Ficus Auriculata (Roxburgh fig)',
-                 'Ficus Religiosa (Peepal Tree)','Hibiscus Rosa-sinensis',
-                 'Jasminum (Jasmine)','Mangifera Indica (Mango)',
-                 'Mentha (Mint)','Moringa Oleifera (Drumstick)',
-                 'Muntingia Calabura (Jamaica Cherry-Gasagase)',
-                 'Murraya Koenigii (Curry)', 'Nerium Oleander (Oleander)',
-                 'Nyctanthes Arbor-tristis (Parijata)','Ocimum Tenuiflorum (Tulsi)',
-                 'Piper Betle (Betel)','Plectranthus Amboinicus (Mexican Mint)',
-                 'Pongamia Pinnata (Indian Beech)','Psidium Guajava (Guava)',
-                 'Punica Granatum (Pomegranate)','Santalum Album (Sandalwood)',
-                 'Syzygium Cumini (Jamun)','Syzygium Jambos (Rose Apple)',
-                 'Tabernaemontana Divaricata (Crape Jasmine)',
-                 'Trigonella Foenum-graecum (Fenugreek)']
-    string="OUTPUT : "+class_names[np.argmax(prediction)]
-    st.success(string)
+
+# Check if the slider value is not None
+if magnitude_level:
+    # Perform the prediction
+    prediction = predict_magnitude(magnitude_level, model)
+    
+    # Display the prediction
+    st.write(f"Predicted Magnitude: {prediction[0][0]:.2f}")
