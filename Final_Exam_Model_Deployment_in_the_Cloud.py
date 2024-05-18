@@ -15,13 +15,15 @@ st.write("""
 # Earthquake Magnitude Classifier
 """)
 
-# Slider for magnitude level
-magnitude_level = st.slider("Magnitude Level", min_value=2.5, max_value=10.0, step=0.1)
+# Sliders for longitude, latitude, and depth
+longitude = st.slider("Longitude", min_value=-180.0, max_value=180.0, step=0.1, value=0.0)
+latitude = st.slider("Latitude", min_value=-90.0, max_value=90.0, step=0.1, value=0.0)
+depth = st.slider("Depth", min_value=0.0, max_value=700.0, step=1.0, value=0.0)
 
-# Define a function to preprocess the magnitude level and predict using the model
-def predict_magnitude(magnitude_level, model):
-    # Preprocess the magnitude level to match model input requirements
-    input_data = np.array([[magnitude_level, 0.0, 0.0]], dtype=np.float32)  # Example with padding the other features
+# Define a function to preprocess the input and predict using the model
+def predict_magnitude(longitude, latitude, depth, model):
+    # Preprocess the input to match model input requirements
+    input_data = np.array([[longitude, latitude, depth]], dtype=np.float32)
     st.write(f"Input data: {input_data}")  # Debugging line
     
     # Predict the magnitude using the model
@@ -31,7 +33,7 @@ def predict_magnitude(magnitude_level, model):
     return prediction
 
 # Perform the prediction
-prediction = predict_magnitude(magnitude_level, model)
+prediction = predict_magnitude(longitude, latitude, depth, model)
 
 # Display the prediction
 st.write(f"Predicted Magnitude: {prediction[0][0]:.2f}")
