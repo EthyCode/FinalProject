@@ -21,10 +21,14 @@ magnitude_level = st.slider("Magnitude Level", min_value=2.5, max_value=10.0, st
 # Define a function to preprocess the magnitude level and predict using the model
 def predict_magnitude(magnitude_level, model):
     # Preprocess the magnitude level to match model input requirements
-    input_data = np.array([[magnitude_level]])  # Assuming model expects a 2D array with shape (1, 1)
+    input_data = np.array([[magnitude_level]], dtype=np.float32)  # Ensuring the input is a 2D array with shape (1, 1) and type float32
+    st.write(f"Input data shape: {input_data.shape}")  # Debugging line
+    st.write(f"Input data type: {input_data.dtype}")  # Debugging line
     
     # Predict the magnitude using the model
     prediction = model.predict(input_data)
+    st.write(f"Prediction shape: {prediction.shape}")  # Debugging line
+    st.write(f"Prediction type: {prediction.dtype}")  # Debugging line
     
     return prediction
 
