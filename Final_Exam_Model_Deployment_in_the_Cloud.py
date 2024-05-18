@@ -15,25 +15,33 @@ st.write("""
 # Earthquake Magnitude Classifier
 """)
 
-# Sliders for longitude, latitude, and depth
-longitude = st.slider("Longitude", min_value=-180.0, max_value=180.0, step=0.1, value=0.0)
-latitude = st.slider("Latitude", min_value=-90.0, max_value=90.0, step=0.1, value=0.0)
-depth = st.slider("Depth", min_value=0.0, max_value=700.0, step=1.0, value=0.0)
+# Slider for magnitude level
+magnitude_level = st.slider("Magnitude Level", min_value=2.5, max_value=10.0, step=0.1)
 
-# Define a function to preprocess the input and predict using the model
-def predict_magnitude(longitude, latitude, depth, model):
-    # Preprocess the input to match model input requirements
-    input_data = np.array([[longitude, latitude, depth]], dtype=np.float32)
-    st.write(f"Input data: {input_data}")  # Debugging line
-    
+# Define magnitude classes based on Richter scale
+def classify_magnitude(magnitude):
+    if magnitude < 3.0:
+        return "Minor"
+    elif magnitude < 5.0:
+        return "Light"
+    elif magnitude < 6.0:
+        return "Moderate"
+    elif magnitude < 7.0:
+        return "Strong"
+    elif magnitude < 8.0:
+        return "Major"
+    else:
+        return "Great"
+
+# Define a function to predict the magnitude class
+def predict_magnitude_class(magnitude_level, model):
     # Predict the magnitude using the model
-    prediction = model.predict(input_data)
-    st.write(f"Prediction: {prediction}")  # Debugging line
-    
-    return prediction
+    prediction = model.predict(np.array([[magnitude_level]]))
+    magnitude_class = classify_magnitude(prediction[0][0])
+    return magnitude_class
 
 # Perform the prediction
-prediction = predict_magnitude(longitude, latitude, depth, model)
+magnitude_class = predict_magnitude_class(magnitude_level, model)
 
-# Display the prediction
-st.write(f"Predicted Magnitude: {prediction[0][0]:.2f}")
+# Display the predicted magnitude class
+st.write(f"Predicted Magnitude Class: {magnitude_class}")
