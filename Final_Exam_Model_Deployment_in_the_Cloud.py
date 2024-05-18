@@ -12,8 +12,7 @@ st.write("""
 file=st.slider("Magnitude Level", min_value=2.5, max_value=10.0, step=0.1)
 
 def predict_magnitude(magnitude_level, model):
-    # Preprocess the magnitude level (if necessary, based on your model's requirements)
-    # Here we assume the model expects a 1D array with a single value
+    # Preprocess the magnitude level to match model input requirements
     input_data = np.array([[magnitude_level]])
     
     # Predict the magnitude using the model
@@ -21,10 +20,8 @@ def predict_magnitude(magnitude_level, model):
     
     return prediction
 
-# Check if the slider value is not None
-if magnitude_level:
-    # Perform the prediction
-    prediction = predict_magnitude(magnitude_level, model)
-    
-    # Display the prediction
-    st.write(f"Predicted Magnitude: {prediction[0][0]:.2f}")
+# Perform the prediction
+prediction = predict_magnitude(magnitude_level, model)
+
+# Display the prediction
+st.write(f"Predicted Magnitude: {prediction[0][0]:.2f}")
