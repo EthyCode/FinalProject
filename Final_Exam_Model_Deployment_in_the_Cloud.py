@@ -1,52 +1,32 @@
 import streamlit as st
 import tensorflow as tf
-import numpy as np
 
-# Load the model with caching
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model('earthquake_magnitude_classifier.h5')
-    return model
-
-model = load_model()
-
-# Streamlit app title
+  model=tf.keras.models.load_model('plant_classifier.hdf5')
+  return model
+model=load_model()
 st.write("""
-# Earthquake Magnitude Classifier
-""")
+# CIFAR10 Detection System"""
+)
+file=st.file_uploader("Insert Image",type=["jpg","png"])
 
-# Slider for magnitude level
-magnitude_level = st.slider("Magnitude Level", min_value=2.5, max_value=10.0, step=0.1)
-
-# Define magnitude classes based on Richter scale
-def classify_magnitude(magnitude):
-    if magnitude < 3.0:
-        return "Minor"
-    elif magnitude < 5.0:
-        return "Light"
-    elif magnitude < 6.0:
-        return "Moderate"
-    elif magnitude < 7.0:
-        return "Strong"
-    elif magnitude < 8.0:
-        return "Major"
-    else:
-        return "Great"
-
-# Define a function to predict the magnitude class
-def predict_magnitude_class(magnitude_level, model):
-    # Reshape the input to match model input requirements
-    input_data = np.array([[magnitude_level]], dtype=np.float32)
-    
-    # Predict the magnitude using the model
-    prediction = model.predict(input_data)
-    
-    # Classify the magnitude
-    magnitude_class = classify_magnitude(magnitude_level)
-    return magnitude_class
-
-# Perform the prediction
-magnitude_class = predict_magnitude_class(magnitude_level, model)
-
-# Display the predicted magnitude class
-st.write(f"Predicted Magnitude Class: {magnitude_class}")
+import cv2
+from PIL import Image,ImageOps
+import numpy as np
+def import_and_predict(image_data,model):
+    size=(64,64)
+    image=ImageOps.fit(image_data,size)
+    img=np.asarray(image)
+    img_reshape=img[np.newaxis,...]
+    prediction=model.predict(img_reshape)
+    return prediction
+if file is None:
+    st.text("Please upload an image file")
+else:
+    image=Image.open(file)
+    st.image(image,use_column_width=True)
+    prediction=import_and_predict(image,model)
+    class_names=['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+    string="OUTPUT : "+class_names[np.argmax(prediction)]
+    st.success(string)
