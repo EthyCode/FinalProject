@@ -26,7 +26,7 @@ if file is None:
 else:
     image=Image.open(file)
     st.image(image,use_column_width=True)
-    prediction=import_and_predict(image,model)
+    prediction=import_and_predict(file,model)
     class_names=['Alpinia Galanga (Rasna)','Amaranthus Viridis (Arive-Dantu)',
                  'Artocarpus Heterophyllus (Jackfruit)',
                  'Azadirachta Indica (Neem)','Basella Alba (Basale)',
