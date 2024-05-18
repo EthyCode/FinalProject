@@ -21,7 +21,7 @@ def predict_magnitude(magnitude_level, model):
     return prediction
 
 # Perform the prediction
-prediction = predict_magnitude(magnitude_level, model)
+prediction = predict_magnitude(file, model)
 
 # Display the prediction
 st.write(f"Predicted Magnitude: {prediction[0][0]:.2f}")
