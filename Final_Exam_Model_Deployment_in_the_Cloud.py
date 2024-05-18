@@ -35,8 +35,13 @@ def classify_magnitude(magnitude):
 
 # Define a function to predict the magnitude class
 def predict_magnitude_class(magnitude_level, model):
+    # Reshape the input to match model input requirements
+    input_data = np.array([[magnitude_level]], dtype=np.float32)
+    
     # Predict the magnitude using the model
-    prediction = model.predict(np.array([[magnitude_level]]))
+    prediction = model.predict(input_data)
+    
+    # Classify the magnitude
     magnitude_class = classify_magnitude(prediction[0][0])
     return magnitude_class
 
