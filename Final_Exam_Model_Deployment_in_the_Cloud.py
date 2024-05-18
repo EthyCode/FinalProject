@@ -9,7 +9,7 @@ model=load_model()
 st.write("""
 # Earthquake Magnitude Classifier """
 )
-file=st.text_input("Enter Magnitude Level",type="default")
+file=st.text_input("Enter Magnitude Level", key=int, type="default")
 
 import cv2
 from PIL import Image,ImageOps
