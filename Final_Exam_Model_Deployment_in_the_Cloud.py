@@ -42,7 +42,7 @@ def predict_magnitude_class(magnitude_level, model):
     prediction = model.predict(input_data)
     
     # Classify the magnitude
-    magnitude_class = classify_magnitude(prediction[0][0])
+    magnitude_class = classify_magnitude(magnitude_level)
     return magnitude_class
 
 # Perform the prediction
